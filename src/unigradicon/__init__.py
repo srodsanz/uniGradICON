@@ -405,7 +405,7 @@ def main():
             preprocess(fixed, args.fixed_modality, fixed_segmentation), 
             finetune_steps=io_iterations)
 
-    itk.transformwrite([phi_AB], args.transform_out)
+    itk.transformwrite([phi_AB, phi_BA], args.transform_out)
 
     if args.warped_moving_out:
         moving, maybe_cast_back = maybe_cast(moving)
