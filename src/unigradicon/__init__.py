@@ -342,8 +342,10 @@ def main():
                          type=str, help="The path of the segmentation map of the fixed image.")
     parser.add_argument("--moving_segmentation", required=False,
                          type=str, help="The path of the segmentation map of the moving image.")
-    parser.add_argument("--transform_out", required=True,
-                         type=str, help="The path to save the transform.")
+    parser.add_argument("--transform_out_ab", required=True,
+                         type=str, help="The path to save the transform A -> B")
+    parser.add_argument("--transform_out_ba", required=True,
+                         type=str, help="The path to save the transform A -> B")
     parser.add_argument("--warped_moving_out", required=False,
                         default=None, type=str, help="The path to save the warped image.")
     parser.add_argument("--io_iterations", required=False,
@@ -405,7 +407,8 @@ def main():
             preprocess(fixed, args.fixed_modality, fixed_segmentation), 
             finetune_steps=io_iterations)
 
-    itk.transformwrite([phi_AB], args.transform_out)
+    itk.transformwrite([phi_AB], args.transform_out_ab)
+    itk.transformwrite([phi_BA], args.transform_out_ba)
 
     if args.warped_moving_out:
         moving, maybe_cast_back = maybe_cast(moving)
